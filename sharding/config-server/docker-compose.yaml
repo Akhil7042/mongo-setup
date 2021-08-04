@@ -11,11 +11,7 @@ services:
       - 27019:27017
     volumes:
       - cfgsvr:/data/db
-    networks:
-      - mongonet
 
 volumes:
   cfgsvr: {}
-networks:
-  mongonet:
-    name: mongonet
+

@@ -11,12 +11,7 @@ services:
       - 27017:27017
     volumes:
       - mongos:/data/db
-    networks:
-      - mongonet
+
 
 volumes:
   mongos: {}
-networks:
-  mongonet:
-    external:
-      name: mongonet
