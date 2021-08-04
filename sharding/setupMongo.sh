@@ -1,8 +1,7 @@
 #!/bin/bash
 destdir=./mongos/.env
 
-# eth0ip=$(ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
-eth0ip="192.168.1.7"
+eth0ip=$(ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
 echo "eth0ip=$eth0ip" > "$destdir"
 export eth0ip="$eth0ip"
 
