@@ -11,6 +11,8 @@ services:
       - 50004:27017
     volumes:
       - shard2svr1:/data/db
+    networks:
+      - mongonet
 
   shard2svr2:
     container_name: shard2svr2
@@ -20,6 +22,8 @@ services:
       - 50005:27017
     volumes:
       - shard2svr2:/data/db
+    networks:
+      - mongonet
 
   shard2svr3:
     container_name: shard2svr3
@@ -29,9 +33,15 @@ services:
       - 50006:27017
     volumes:
       - shard2svr3:/data/db
+    networks:
+      - mongonet
 
 volumes:
   shard2svr1: {}
   shard2svr2: {}
   shard2svr3: {}
 
+networks:
+  mongonet:
+    external:
+      name: mongonet

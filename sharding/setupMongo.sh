@@ -1,61 +1,95 @@
 #!/bin/bash
-destdir=mongos/.env
+destdir=./mongos/.env
 
-eth0ip=$(ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
-# eth0ip="192.168.1.7"
+# eth0ip=$(ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
+eth0ip="192.168.1.7"
 echo "eth0ip=$eth0ip" > "$destdir"
 export eth0ip="$eth0ip"
 
-# Setting up mongo config server
-echo "Setting up mongo config server --------------"
 
-echo "docker compose"
+echo "--------------------Setting up mongo config server --------------"
 docker-compose -f config-server/docker-compose.yaml up -d
-sleep 10
-echo "connect to config"
-mongo mongodb://"$eth0ip":27019 scripts/initiateConfigServer.js
 
-
-# Setting up shard 1
-echo "Setting up shard 1 ----------------"
-echo "docker compose"
+echo "--------------------Setting up shard 1 --------------------"
 docker-compose -f shard1/docker-compose.yaml up -d
-sleep 10
-echo "initiateShard1"
-mongo mongodb://"$eth0ip":27020 scripts/initiateReplicaSetForShard1.js
 
-
-# Setting up MongoS
-echo "setting up mongos ----------------------------"
-echo "docker-compose mongos"
+echo "--------------------Setting up mongos ----------------------------"
 docker-compose -f mongos/docker-compose.yaml up -d
-sleep 10
 
-#adding Shard1 in mongos
-echo "Adding shard1 -------------------------"
-echo "mongo addshards"
-mongo mongodb://"$eth0ip":27017 scripts/addShard1.js
-sleep 10
 
-#Setting up Shard2
-echo "Setting up shard 2-----------------"
+echo "--------------------Setting up shard 2-----------------"
 echo "docker compose"
 docker-compose -f shard2/docker-compose.yaml up -d
+
+
+echo "------------------connect to config ------------------"
+sleep 5
+echo "------------------run config scripts ------------------"
+
+docker exec cfgsvr mongo --eval 'rs.initiate(
+  {
+    _id: "cfgrs",
+    configsvr: true,
+    members: [
+      { _id : 0, host : "'$eth0ip':27019" },
+    ]
+  }
+)'
+
+
+echo "------------------connect to shard1 ------------------"
+echo "-------------------initiateShard1----------------------"
+docker exec shard1svr1 mongo --eval 'rs.initiate(
+  {
+    _id: "shard1rs",
+    members: [
+      { _id : 0, host : "'$eth0ip':27020" },
+      { _id : 1, host : "'$eth0ip':27021" },
+      { _id : 2, host : "'$eth0ip':27022" }
+    ]
+  }
+)'
+
+
+
+sleep 5
+
+echo "------------------connect to mongos ------------------"
+echo "-------------------Adding shard1 -------------------------"
+docker exec mongos mongo --eval 'sh.addShard("shard1rs/'$eth0ip':27020,'$eth0ip':27021,'$eth0ip':27022")'
+sleep 5
+
+
+echo "--------------------connect to Shard2-------------------------"
+echo "--------------------initiateShard2-------------------------"
+docker exec shard2svr1 mongo --eval '
+rs.initiate(
+  {
+    _id: "shard2rs",
+    members: [
+      { _id : 0, host : "'$eth0ip':50004" },
+      { _id : 1, host : "'$eth0ip':50005" },
+      { _id : 2, host : "'$eth0ip':50006" }
+    ]
+  }
+)'
+
+
+echo "------------------connect to mongos ------------------"
 sleep 10
-echo "initiateShard2"
-mongo mongodb://"$eth0ip":50004 scripts/initiateReplicaSetForShard2.js
+echo "---------------------Adding shard2 --------------------"
+docker exec mongos mongo --eval '
+sh.addShard("shard2rs/'$eth0ip':50004,'$eth0ip':50005,'$eth0ip':50006")
+'
 
 
 
-#adding shard2
-echo "Adding shard2 --------------------"
-echo "mongo addshards"
-mongo mongodb://"$eth0ip":27017 scripts/addShard2.js
+echo "-----------------------enableShardsOnDB--------------------"
 
-
-
-echo "enableShardsOnDB"
-mongo mongodb://"$eth0ip":27017 scripts/enableShardsOnDB.js
+docker exec mongos mongo --eval '
+sh.enableSharding("creditDB")
+sh.shardCollection("creditDB.users", {"username": "hashed"})
+db.users.getShardDistribution()'
 
 
 
