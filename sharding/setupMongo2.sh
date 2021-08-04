@@ -11,7 +11,7 @@ export eth0ip="$eth0ip"
 echo "--------------------Setting up mongo config server --------------"
 docker-compose -f config-server/docker-compose.yaml up -d
 
-sleep 5
+sleep 20
 # Setting up shard 1
 echo "--------------------Setting up shard 1 --------------------"
 docker-compose -f shard1/docker-compose.yaml up -d
