@@ -1,7 +1,13 @@
 ### Mongo setup
-run setupMongo.sh to setup whole mongo shards architecture
+run setupMongo.sh in './sharding' folder to setup whole mongo shards architecture
 ```
+cd sharding
 sudo sh setupMongo.sh
+```
+
+to remove all the containers
+```
+sudo sh removeContainers.sh
 ```
 
 
