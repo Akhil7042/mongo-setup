@@ -1,8 +1,8 @@
 #!/bin/bash
 destdir=./mongos/.env
 
-eth0ip=$(ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
-# eth0ip="192.168.43.216"
+# eth0ip=$(ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
+eth0ip="192.168.1.7"
 echo "eth0ip=$eth0ip" > "$destdir"
 export eth0ip="$eth0ip"
 
@@ -15,7 +15,7 @@ sleep 30
 # Setting up shard 1
 echo "--------------------Setting up shard 1 --------------------"
 docker-compose -f shard1/docker-compose.yaml up -d
-sleep 30
+sleep 90
 # Setting up MongoS
 echo "--------------------Setting up mongos ----------------------------"
 docker-compose -f mongos/docker-compose.yaml up -d
@@ -49,6 +49,7 @@ sleep 40
 echo "------------------connect to mongos ------------------"
 docker exec mongos mongo
 sleep 5
+
 echo "-------------------Adding shard1 -------------------------"
 docker exec mongos mongo < scripts/addShard1.js
 sleep 40
