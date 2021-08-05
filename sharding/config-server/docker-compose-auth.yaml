@@ -4,7 +4,7 @@ services:
   cfgsvr:
     container_name: cfgsvr
     image: mongo
-    command: mongod --configsvr --replSet cfgrs --port 27017 --dbpath /data/db
+    command: mongod --configsvr --replSet cfgrs --port 27017 --dbpath /data/db --keyFile "/etc/key.file"  --auth
     ports:
       - 27019:27017
     volumes:
