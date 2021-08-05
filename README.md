@@ -6,6 +6,10 @@ To Setup mongodb sharded cluster with authentication enabled (on linux machine),
 cd sharding
 sudo run setupMongo.sh
 ```
+To run mongodb
+```
+sudo docker mongos mongo -u root -p 123456
+```
 
 ### notes: 
 >if you are running windows comment line 4 in setupContainersWithAuth.sh setupContainersWithoutAuth.sh and add your own ip if you are running in windows
