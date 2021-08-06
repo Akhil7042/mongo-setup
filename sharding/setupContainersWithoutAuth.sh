@@ -113,7 +113,7 @@ db = db.getSiblingDB("admin");
 db.createUser(
         {
             user:"root",
-            pwd:"123456",
+            pwd:"batch4-db",
             roles:[{role:"root",db:"admin"}]
         })
 
