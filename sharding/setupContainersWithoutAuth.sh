@@ -13,7 +13,7 @@ echo "-----------------------creating keyfile for mongo auth -------------------
 # openssl rand -base64 741 > cnf/key.file
 
 chmod 600 cnf/key.file
-chown 999 cnd/key.file 
+chown 999 cnf/key.file 
 
 
 
