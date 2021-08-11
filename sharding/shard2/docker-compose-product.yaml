@@ -4,40 +4,40 @@ version: '3'
 services:
 
   shard2svr1:
-    container_name: shard2svr1
+    container_name: shard2svr1-product
     image: mongo
     command: mongod --shardsvr --replSet shard2rs --port 27017 --dbpath /data/db
     ports:
       - 5013:27017
     volumes:
-      - shard2svr1:/data/db
+      - shard2svr1-product:/data/db
       - ../cnf/mongod.conf:/etc/mongod.conf
       - ../cnf/key.file:/etc/key.file
 
 
   shard2svr2:
-    container_name: shard2svr2
+    container_name: shard2svr2-product
     image: mongo
     command: mongod --shardsvr --replSet shard2rs --port 27017 --dbpath /data/db
     ports:
       - 5014:27017
     volumes:
-      - shard2svr2:/data/db
+      - shard2svr2-product:/data/db
       - ../cnf/mongod.conf:/etc/mongod.conf
       - ../cnf/key.file:/etc/key.file
 
   shard2svr3:
-    container_name: shard2svr3
+    container_name: shard2svr3-product
     image: mongo
     command: mongod --shardsvr --replSet shard2rs --port 27017 --dbpath /data/db
     ports:
       - 5015:27017
     volumes:
-      - shard2svr3:/data/db
+      - shard2svr3-product:/data/db
       - ../cnf/mongod.conf:/etc/mongod.conf
       - ../cnf/key.file:/etc/key.file
 
 volumes:
-  shard2svr1: {}
-  shard2svr2: {}
-  shard2svr3: {}
+  shard2svr1-product: {}
+  shard2svr2-product: {}
+  shard2svr3-product: {}

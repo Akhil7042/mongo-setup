@@ -10,10 +10,10 @@ services:
     ports:
       - 6010:27017
     volumes:
-      - mongos:/data/db
+      - mongos-product:/data/db
       - ../cnf/mongod.conf:/etc/mongod.conf
       - ../cnf/key.file:/etc/key.file
 
 
 volumes:
-  mongos: {}
+  mongos-product: {}

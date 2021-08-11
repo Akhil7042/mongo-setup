@@ -1,0 +1,44 @@
+
+version: '3'
+
+services:
+
+  shard1svr1:
+    container_name: shard1svr1-card
+    image: mongo
+    command: mongod --shardsvr --replSet shard1rs-card --port 27017 --dbpath /data/db 
+    ports:
+      - 5000:27017
+    volumes:
+      - shard1svr1-card:/data/db
+      - ../cnf/mongod.conf:/etc/mongod.conf
+      - ../cnf/key.file:/etc/key.file
+
+
+  shard1svr2:
+    container_name: shard1svr2-card
+    image: mongo
+    command: mongod --shardsvr --replSet shard1rs-card --port 27017 --dbpath /data/db 
+    ports:
+      - 5001:27017
+    volumes:
+      - shard1svr2-card:/data/db
+      - ../cnf/mongod.conf:/etc/mongod.conf
+      - ../cnf/key.file:/etc/key.file
+
+  shard1svr3:
+    container_name: shard1svr3-card
+    image: mongo
+    command: mongod --shardsvr --replSet shard1rs-card --port 27017 --dbpath /data/db 
+    ports:
+      - 5002:27017
+    volumes:
+      - shard1svr3-card:/data/db
+      - ../cnf/mongod.conf:/etc/mongod.conf
+      - ../cnf/key.file:/etc/key.file
+
+volumes:
+  shard1svr1-card: {}
+  shard1svr2-card: {}
+  shard1svr3-card: {}
+

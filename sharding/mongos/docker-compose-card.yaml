@@ -4,16 +4,16 @@ version: '3'
 services:
 
   mongos:
-    container_name: mongos-product
+    container_name: mongos-card
     image: mongo
     command: mongos -configdb cfgrs/${eth0ip}:4010  --bind_ip 0.0.0.0 --port 27017
     ports:
-      - 6010:27017
+      - 6000:27017
     volumes:
-      - mongos:/data/db
+      - mongos-card:/data/db
       - ../cnf/mongod.conf:/etc/mongod.conf
       - ../cnf/key.file:/etc/key.file
 
 
 volumes:
-  mongos: {}
+  mongos-card: {}

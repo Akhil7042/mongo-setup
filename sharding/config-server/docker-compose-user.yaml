@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  cfgsvr:
+    container_name: cfgsvr-user
+    image: mongo
+    command: mongod --configsvr --replSet cfgrs-user --port 27017 --dbpath /data/db
+    ports:
+      - 4020:27017
+    volumes:
+      - cfgsvr-user:/data/db
+      - ../cnf/mongod.conf:/etc/mongod.conf
+      - ../cnf/key.file:/etc/key.file
+
+
+volumes:
+  cfgsvr-user: {}
