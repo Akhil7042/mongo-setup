@@ -44,7 +44,7 @@ docker exec cfgsvr mongo --eval 'rs.initiate(
     _id: "cfgrs",
     configsvr: true,
     members: [
-      { _id : 0, host : "'$eth0ip':27019" },
+      { _id : 0, host : "'$eth0ip':4010" },
     ]
   }
 )'
@@ -56,9 +56,9 @@ docker exec shard1svr1 mongo --eval 'rs.initiate(
   {
     _id: "shard1rs",
     members: [
-      { _id : 0, host : "'$eth0ip':27020" },
-      { _id : 1, host : "'$eth0ip':27021" },
-      { _id : 2, host : "'$eth0ip':27022" }
+      { _id : 0, host : "'$eth0ip':5010" },
+      { _id : 1, host : "'$eth0ip':5011" },
+      { _id : 2, host : "'$eth0ip':5012" }
     ]
   }
 )'
@@ -69,7 +69,7 @@ sleep 5
 
 echo "------------------connect to mongos ------------------"
 echo "-------------------Adding shard1 -------------------------"
-docker exec mongos mongo --eval 'sh.addShard("shard1rs/'$eth0ip':27020,'$eth0ip':27021,'$eth0ip':27022")'
+docker exec mongos mongo --eval 'sh.addShard("shard1rs/'$eth0ip':5010,'$eth0ip':5011,'$eth0ip':5012")'
 sleep 5
 
 
@@ -80,9 +80,9 @@ rs.initiate(
   {
     _id: "shard2rs",
     members: [
-      { _id : 0, host : "'$eth0ip':50004" },
-      { _id : 1, host : "'$eth0ip':50005" },
-      { _id : 2, host : "'$eth0ip':50006" }
+      { _id : 0, host : "'$eth0ip':5013" },
+      { _id : 1, host : "'$eth0ip':5014" },
+      { _id : 2, host : "'$eth0ip':5015" }
     ]
   }
 )'
@@ -92,32 +92,32 @@ echo "------------------connect to mongos ------------------"
 sleep 10
 echo "---------------------Adding shard2 --------------------"
 docker exec mongos mongo --eval '
-sh.addShard("shard2rs/'$eth0ip':50004,'$eth0ip':50005,'$eth0ip':50006")
+sh.addShard("shard2rs/'$eth0ip':5013,'$eth0ip':5014,'$eth0ip':5015")
 '
 
 
 
-echo "-----------------------enableShardsOnDB--------------------"
+# echo "-----------------------enableShardsOnDB--------------------"
 
-docker exec mongos mongo --eval '
-sh.enableSharding("creditDB")
-sh.shardCollection("creditDB.users", {"username": "hashed"})
-'
+# docker exec mongos mongo --eval '
+# sh.enableSharding("creditDB")
+# sh.shardCollection("creditDB.users", {"username": "hashed"})
+# '
 
-echo "------------------------Adding root user--------------------"
-echo "------------------------username - root---------------------"
-echo "------------------------password - 123456 ---------------------"
+# echo "------------------------Adding root user--------------------"
+# echo "------------------------username - root---------------------"
+# echo "------------------------password - 123456 ---------------------"
 
-docker exec mongos mongo --eval '
-db = db.getSiblingDB("admin");
-db.createUser(
-        {
-            user:"root",
-            pwd:"batch4-db",
-            roles:[{role:"root",db:"admin"}]
-        })
+# docker exec mongos mongo --eval '
+# db = db.getSiblingDB("admin");
+# db.createUser(
+#         {
+#             user:"root",
+#             pwd:"batch4-db",
+#             roles:[{role:"root",db:"admin"}]
+#         })
 
-'
+# '
 
 
 
