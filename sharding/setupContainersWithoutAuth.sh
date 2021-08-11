@@ -142,7 +142,7 @@ rs.initiate(
 echo "------------------connect to mongos ------------------"
 sleep 10
 echo "---------------------Adding shard2 --------------------"
-docker exec mongos mongo --eval '
+docker exec mongos-product mongo --eval '
 sh.addShard("shard2rs-product/'$eth0ip':5013,'$eth0ip':5014,'$eth0ip':5015")
 '
 

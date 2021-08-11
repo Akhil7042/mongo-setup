@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  cfgsvr:
+  cfgsvr-product:
     container_name: cfgsvr-product
     image: mongo
     command: mongod --configsvr --replSet cfgrs-product --port 27017 --dbpath /data/db

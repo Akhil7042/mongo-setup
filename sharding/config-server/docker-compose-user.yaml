@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  cfgsvr:
+  cfgsvr-user:
     container_name: cfgsvr-user
     image: mongo
     command: mongod --configsvr --replSet cfgrs-user --port 27017 --dbpath /data/db

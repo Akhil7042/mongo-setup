@@ -3,7 +3,7 @@ version: '3'
 
 services:
 
-  shard2svr1:
+  shard2svr1-product:
     container_name: shard2svr1-product
     image: mongo
     command: mongod --shardsvr --replSet shard2rs --port 27017 --dbpath /data/db
@@ -15,7 +15,7 @@ services:
       - ../cnf/key.file:/etc/key.file
 
 
-  shard2svr2:
+  shard2svr2-product:
     container_name: shard2svr2-product
     image: mongo
     command: mongod --shardsvr --replSet shard2rs --port 27017 --dbpath /data/db
@@ -26,7 +26,7 @@ services:
       - ../cnf/mongod.conf:/etc/mongod.conf
       - ../cnf/key.file:/etc/key.file
 
-  shard2svr3:
+  shard2svr3-product:
     container_name: shard2svr3-product
     image: mongo
     command: mongod --shardsvr --replSet shard2rs --port 27017 --dbpath /data/db
