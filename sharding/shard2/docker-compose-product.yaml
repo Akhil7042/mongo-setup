@@ -6,7 +6,7 @@ services:
   shard2svr1-product:
     container_name: shard2svr1-product
     image: mongo
-    command: mongod --shardsvr --replSet shard2rs --port 27017 --dbpath /data/db
+    command: mongod --shardsvr --replSet shard2rs-product --port 27017 --dbpath /data/db
     ports:
       - 5013:27017
     volumes:
@@ -18,7 +18,7 @@ services:
   shard2svr2-product:
     container_name: shard2svr2-product
     image: mongo
-    command: mongod --shardsvr --replSet shard2rs --port 27017 --dbpath /data/db
+    command: mongod --shardsvr --replSet shard2rs-product --port 27017 --dbpath /data/db
     ports:
       - 5014:27017
     volumes:
@@ -29,7 +29,7 @@ services:
   shard2svr3-product:
     container_name: shard2svr3-product
     image: mongo
-    command: mongod --shardsvr --replSet shard2rs --port 27017 --dbpath /data/db
+    command: mongod --shardsvr --replSet shard2rs-product --port 27017 --dbpath /data/db
     ports:
       - 5015:27017
     volumes:
