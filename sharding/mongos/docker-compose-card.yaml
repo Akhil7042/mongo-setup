@@ -6,7 +6,7 @@ services:
   mongos-card:
     container_name: mongos-card
     image: mongo
-    command: mongos -configdb cfgrs-card/${eth0ip}:4010  --bind_ip 0.0.0.0 --port 27017
+    command: mongos -configdb cfgrs-card/${eth0ip}:4000  --bind_ip 0.0.0.0 --port 27017
     ports:
       - 6000:27017
     volumes:

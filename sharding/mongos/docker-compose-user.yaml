@@ -6,7 +6,7 @@ services:
   mongos-user:
     container_name: mongos-user
     image: mongo
-    command: mongos -configdb cfgrs-user/${eth0ip}:4010  --bind_ip 0.0.0.0 --port 27017
+    command: mongos -configdb cfgrs-user/${eth0ip}:4020  --bind_ip 0.0.0.0 --port 27017
     ports:
       - 6020:27017
     volumes:

@@ -1,4 +1,4 @@
 #!/bin/bash
 # Author : rohpatil5
-sh setupContainersWithoutAuthCard.sh
+sh setupContainersWithoutAuth.sh
 #sh setupContainersWithAuth.sh
