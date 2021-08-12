@@ -21,25 +21,25 @@ chown 999 cnf/key.file
 
 
 echo "--------------------Setting up mongo config server --------------"
-docker-compose -f config-server/docker-compose-product.yaml up -d --remove-orphans
-docker-compose -f config-server/docker-compose-card.yaml up -d --remove-orphans
-docker-compose -f config-server/docker-compose-user.yaml up -d --remove-orphans
+docker-compose -f config-server/docker-compose-product.yaml up -d 
+docker-compose -f config-server/docker-compose-card.yaml up -d 
+docker-compose -f config-server/docker-compose-user.yaml up -d 
 
 
 echo "--------------------Setting up shard 1 --------------------"
-docker-compose -f shard1/docker-compose-product.yaml up -d --remove-orphans
-docker-compose -f shard1/docker-compose-card.yaml up -d --remove-orphans
-docker-compose -f shard1/docker-compose-user.yaml up -d --remove-orphans
+docker-compose -f shard1/docker-compose-product.yaml up -d 
+docker-compose -f shard1/docker-compose-card.yaml up -d 
+docker-compose -f shard1/docker-compose-user.yaml up -d 
 
 echo "--------------------Setting up mongos ----------------------------"
-docker-compose -f mongos/docker-compose-product.yaml up -d --remove-orphans
-docker-compose -f mongos/docker-compose-card.yaml up -d --remove-orphans
-docker-compose -f mongos/docker-compose-user.yaml up -d --remove-orphans
+docker-compose -f mongos/docker-compose-product.yaml up -d 
+docker-compose -f mongos/docker-compose-card.yaml up -d 
+docker-compose -f mongos/docker-compose-user.yaml up -d 
 
 
 echo "--------------------Setting up shard 2-----------------"
 echo "docker compose"
-docker-compose -f shard2/docker-compose-product.yaml up -d --remove-orphans
+docker-compose -f shard2/docker-compose-product.yaml up -d 
 
 
 echo "------------------connect to config ------------------"
