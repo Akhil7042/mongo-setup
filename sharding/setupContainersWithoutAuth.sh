@@ -21,25 +21,25 @@ chown 999 cnf/key.file
 
 
 echo "--------------------Setting up mongo config server --------------"
-docker-compose -f config-server/docker-compose-product.yaml up -d
-docker-compose -f config-server/docker-compose-card.yaml up -d
-docker-compose -f config-server/docker-compose-user.yaml up -d
+docker-compose -f config-server/docker-compose-product.yaml up -d --remove-orphans
+docker-compose -f config-server/docker-compose-card.yaml up -d --remove-orphans
+docker-compose -f config-server/docker-compose-user.yaml up -d --remove-orphans
 
 
 echo "--------------------Setting up shard 1 --------------------"
-docker-compose -f shard1/docker-compose-product.yaml up -d
-docker-compose -f shard1/docker-compose-card.yaml up -d
-docker-compose -f shard1/docker-compose-user.yaml up -d
+docker-compose -f shard1/docker-compose-product.yaml up -d --remove-orphans
+docker-compose -f shard1/docker-compose-card.yaml up -d --remove-orphans
+docker-compose -f shard1/docker-compose-user.yaml up -d --remove-orphans
 
 echo "--------------------Setting up mongos ----------------------------"
-docker-compose -f mongos/docker-compose-product.yaml up -d
-docker-compose -f mongos/docker-compose-card.yaml up -d
-docker-compose -f mongos/docker-compose-user.yaml up -d
+docker-compose -f mongos/docker-compose-product.yaml up -d --remove-orphans
+docker-compose -f mongos/docker-compose-card.yaml up -d --remove-orphans
+docker-compose -f mongos/docker-compose-user.yaml up -d --remove-orphans
 
 
 echo "--------------------Setting up shard 2-----------------"
 echo "docker compose"
-docker-compose -f shard2/docker-compose-product.yaml up -d
+docker-compose -f shard2/docker-compose-product.yaml up -d --remove-orphans
 
 
 echo "------------------connect to config ------------------"
@@ -55,7 +55,7 @@ docker exec cfgsvr-product mongo --eval 'rs.initiate(
     ]
   }
 )'
-
+sleep 5
 docker exec cfgsvr-card mongo --eval 'rs.initiate(
   {
     _id: "cfgrs-card",
@@ -65,7 +65,7 @@ docker exec cfgsvr-card mongo --eval 'rs.initiate(
     ]
   }
 )'
-
+sleep 5
 docker exec cfgsvr-user mongo --eval 'rs.initiate(
   {
     _id: "cfgrs-user",
@@ -76,6 +76,7 @@ docker exec cfgsvr-user mongo --eval 'rs.initiate(
   }
 )'
 
+sleep 5
 
 echo "------------------connect to shard1 ------------------"
 echo "-------------------initiateShard1----------------------"
@@ -89,7 +90,7 @@ docker exec shard1svr1-product mongo --eval 'rs.initiate(
     ]
   }
 )'
-
+sleep 5
 docker exec shard1svr1-card mongo --eval 'rs.initiate(
   {
     _id: "shard1rs-card",
@@ -100,7 +101,7 @@ docker exec shard1svr1-card mongo --eval 'rs.initiate(
     ]
   }
 )'
-
+sleep 5
 docker exec shard1svr1-user mongo --eval 'rs.initiate(
   {
     _id: "shard1rs-user",
