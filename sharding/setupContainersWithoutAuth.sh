@@ -153,9 +153,12 @@ sh.addShard("shard2rs-product/'$eth0ip':5013,'$eth0ip':5014,'$eth0ip':5015")
 
 # echo "-----------------------enableShardsOnDB--------------------"
 
-# docker exec mongos mongo --eval '
-# sh.enableSharding("creditDB")
-# sh.shardCollection("creditDB.users", {"username": "hashed"})
+# docker exec mongos-card mongo --eval '
+# use bredit
+
+# sh.enableSharding("bredit")
+# sh.shardCollection("bredit.product", {"_id": "hashed"})
+# exit
 # '
 
 # echo "------------------------Adding root user--------------------"
