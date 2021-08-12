@@ -119,7 +119,9 @@ sleep 5
 echo "------------------connect to mongos ------------------"
 echo "-------------------Adding shard1 -------------------------"
 docker exec mongos-product mongo --eval 'sh.addShard("shard1rs-product/'$eth0ip':5010,'$eth0ip':5011,'$eth0ip':5012")'
+sleep 5
 docker exec mongos-card mongo --eval 'sh.addShard("shard1rs-card/'$eth0ip':5000,'$eth0ip':5001,'$eth0ip':5002")'
+sleep 5
 docker exec mongos-user mongo --eval 'sh.addShard("shard1rs-user/'$eth0ip':5030,'$eth0ip':5031,'$eth0ip':5032")'
 sleep 5
 
