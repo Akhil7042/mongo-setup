@@ -13,7 +13,7 @@ services:
       - mongos-card:/data/db
       - ../cnf/mongod.conf:/etc/mongod.conf
       - ../cnf/key.file:/etc/key.file
-
+    restart: always
 
 volumes:
   mongos-card: {}

@@ -13,7 +13,7 @@ services:
       - shard1svr1-card:/data/db
       - ../cnf/mongod.conf:/etc/mongod.conf
       - ../cnf/key.file:/etc/key.file
-
+    restart: always
 
   shard1svr2-card:
     container_name: shard1svr2-card
@@ -25,6 +25,7 @@ services:
       - shard1svr2-card:/data/db
       - ../cnf/mongod.conf:/etc/mongod.conf
       - ../cnf/key.file:/etc/key.file
+    restart: always
 
   shard1svr3-card:
     container_name: shard1svr3-card
@@ -36,6 +37,7 @@ services:
       - shard1svr3-card:/data/db
       - ../cnf/mongod.conf:/etc/mongod.conf
       - ../cnf/key.file:/etc/key.file
+    restart: always
 
 volumes:
   shard1svr1-card: {}
